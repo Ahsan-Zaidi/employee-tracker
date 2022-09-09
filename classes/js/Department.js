@@ -1,3 +1,4 @@
+//required items
 const cTable = require('console.table');
 
 //create Department class with all functions

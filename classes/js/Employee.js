@@ -50,6 +50,18 @@ class Employee {
             console.table(res);
         })
     }
+    //view the employee by thier manager
+    ViewEmployeeByMgr(connection)
+    {
+        let sqlQuery = `Select e.id AS ID,CONCAT(e.first_name,' ', e.last_name) AS EmployeeNAME, 
+        CONCAT(m.first_name,' ',m.last_name) AS MANAGER
+        from employee e LEFT JOIN employee m ON m.id=e.manager_id
+        ORDER BY e.ID ASC`;
+        connection.query(sqlQuery, (err, res) => {
+            if (err) {throw err}
+            console.table(res);
+        })
+    }
     //pulls the employee by the manager assigned
     ViewEmployeeByDpt(connection)
     {
