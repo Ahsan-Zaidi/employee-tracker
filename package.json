@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Ahsan-Zaidi/employee-tracker#readme",
   "dependencies": {
+    "console-table": "^0.1.2",
+    "inquirer": "^9.1.1",
     "mysql2": "^2.3.3"
   }
 }
