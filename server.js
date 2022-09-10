@@ -6,9 +6,9 @@ const inquirer = require('inquirer');
 const Employee = require('./classes/js/Employee');
 const Department = require('./classes/js/Department');
 const Role = require('./classes/js/Role');
-const { appendFile } = require("fs");
-const { default: prompt } = require("inquirer/lib/ui/prompt");
-const { allowedNodeEnvironmentFlags } = require("process");
+    // const { appendFile } = require("fs");
+    // const { default: prompt } = require("inquirer/lib/ui/prompt");
+    // const { allowedNodeEnvironmentFlags } = require("process");
 
 //if connection is made run app
 connection.connect((error) => {
@@ -224,3 +224,103 @@ const addEmp = () => {
     });
 }
 
+//Add a role
+const addRole = () => {
+    let role = [];
+    inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'Enter position title: ',
+            validate: title => {
+                if (title) {
+                    return true;
+                } else {
+                    console.log('Please enter a title!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'salary',
+            message: 'Enter salary',
+            validate: salary => {
+                if (salary) {
+                    return true;
+                } else {
+                    console.log('Please enter salary!');
+                    return false;
+                }
+            }
+        }
+    ]).then(response => {
+        role.push(response.title);
+        role.push(response.salary);
+        let dept = [];
+        let sqlQuery = `Select name from Department`;
+        connection.query(sqlQuery, (err, res) => {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                dept.push(res[i].name);
+            }
+            inquirer.prompt({
+                type: 'input',
+                name: 'depts',
+                message: 'Choose the department for this position',
+                choices: dept
+            }).then(response => {
+                let sqlQuery = `Select id from department where name="` + response.depts + `"`;
+                connection.query(sqlQuery, (err, res) => {
+                    if (err) throw err;
+                    role.push(res[0].id)
+                    let r = new Role(1, role[0], role[1], role[2],);
+                    r.addRole(connection, r.getTitle(), r.getSalary(), r.getDid())
+                    console.log('New position has been successfully added');
+                    promptUser();
+                })
+            });
+        });
+    });
+}
+
+//update
+const updateRole = () => {
+    let employees = [];
+    connection.query(`SELECT id, first_name, last_name FROM employee`, (err, res) => {
+        res.forEach(element => {
+            employees.push(`${element.id} ${element.first_name} ${element.last_name}`);
+        });
+        let job = [];
+        connection.query(`SELECT id, title FROM role`, (err, res) => {
+            res.forEach(element => {
+                job.push(`${element.id} ${element.title}`);
+            });
+            inquirer.prompt([
+                {
+                    name: 'update',
+                    type: 'list',
+                    message: 'Choose employee whose role is to be updated',
+                    choices: employees
+                },
+                {
+                    name: 'role',
+                    type: 'list',
+                    message: 'Choose the employees job position',
+                    choices: job
+                }
+            ]).then(response => {
+                let idCode = parseInt(response.update);
+                let roleCode = parseInt(response.role);
+                let r = new Role(1, "abc", 332, 1)
+                r.updateRole(connection, roleCode, idCode)
+                promptUser();
+            })
+        })
+    })
+}
+
+//Update manager function
+const updateMgr = () => {
+    let employees = [];
+}
