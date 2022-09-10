@@ -381,3 +381,69 @@ const BUDGET = () => {
 }
 
 //function to remove an employee
+const removeEmployee = () => {
+    let activeEmployees = [];
+    connection.query(`SELECT id, first_name, last_name
+    FROM employee`, (err, res) => {
+        res.forEach(element => {
+            activeEmployees.push(`${element.id} ${element.first_name} ${element.last_name}`);
+        });
+        inquirer
+            .prompt({
+                name: "remove",
+                type: "list",
+                message: "What employee would you like to remove?",
+                choices: activeEmployees
+            })
+            .then(response => {
+
+                let employeeID = parseInt(response.remove)
+                let e = new Employee(1, "AD", "Ds", 1, 1)
+                e.DeleteEmp(connection, employeeID);
+
+                promptUser();
+            })
+    })
+}
+
+//function to remove a role
+const removeRole = () => {
+    let sql = `SELECT role.id, role.title FROM role`;
+
+    connection.query(sql, (error, response) => {
+      if (error) throw error;
+      let roleNamesArray = [];
+      response.forEach((role) => {roleNamesArray.push(role.title);});
+
+      inquirer
+        .prompt([
+          {
+            name: 'chosenRole',
+            type: 'list',
+            message: 'Which role would you like to remove?',
+            choices: roleNamesArray
+          }
+        ])
+        .then((answer) => {
+          let roleId;
+
+          response.forEach((role) => {
+            if (answer.chosenRole === role.title) {
+              roleId = role.id;
+            }
+          });
+
+          let sql =   `DELETE FROM role WHERE role.id = ?`;
+          connection.query(sql, [roleId], (error) => {
+            if (error) throw error;
+            console.log('Role has been successfully removed!');
+            promptUser();
+            });
+        });
+    });
+};
+
+const app = () => {
+    promptUser();
+}
+
