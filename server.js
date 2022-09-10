@@ -323,4 +323,31 @@ const updateRole = () => {
 //Update manager function
 const updateMgr = () => {
     let employees = [];
+    connection.query(`SELECT id, first_name, last_name FROM employee`, (err, res) => {
+        res.forEach(element => {
+            employees.push(`${element.id} ${element.first_name} ${element.last_name}`);
+        });
+        inquirer.prompt([
+            {
+                name: 'update',
+                type: 'list',
+                message: 'Choose the employee whose manager is to be updated:',
+                choices: employees
+            },
+            {
+                name: 'manager',
+                type: 'list',
+                message: 'Choose employees new manager',
+                choices: employees
+            }
+        ]).then(response => {
+            let idCode = parseInt(response.update);
+            let managerCode = parseInt(response.manager);
+            let e = new Employee(1, 'abcc', 'sc', 1, 2);
+            e.updateMgr(connection, managerCode, idCode);
+            promptUser();
+        })
+    })
 }
+
+//Function to pull up BUDGET
