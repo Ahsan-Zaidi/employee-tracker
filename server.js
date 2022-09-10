@@ -351,3 +351,33 @@ const updateMgr = () => {
 }
 
 //Function to pull up BUDGET
+const BUDGET = () => {
+    const bonusTable = `SELECT e.id, e.first_name, e.last_name, role.title, role.salary ,d.name, CONCAT(m.first_name,' ',m.last_name) AS manager FROM employee e LEFT JOIN employee m ON m.id = e.manager_id JOIN role JOIN department d on role.department_id = d.id and e.role_id = role.id`
+    let dpt = [];
+    connection.query(`SELECT * FROM department`, (err, res) => {
+        res.forEach(element => {
+            dpt.push(element.name);
+        })
+        inquirer.prompt({
+            name: 'budget',
+            type: 'list',
+            message: 'Choose which department budget you want to see:',
+            choices: dpt
+        })
+        .then(response => {
+            connection.query(`SELECT salary FROM (${bonusTable}) AS managerSubTable WHERE name = "${response.budget}"`, (err, resp) => {
+                let sum = 0;
+                resp.forEach(element => {
+                    sum += element.salary;
+                })
+                connection.query(`SELECT name FROM department WHERE name = "${response.budget}"`, (err, res) => {
+                    if (err) throw err;
+                    console.table(res);
+                    console.log(`budget of $${sum}`)
+                })
+            })
+        })
+    })
+}
+
+//function to remove an employee
