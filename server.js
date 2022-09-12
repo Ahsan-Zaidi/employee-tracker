@@ -194,7 +194,7 @@ const addEmp = () => {
                 })
                 var mgr = [];
                 let sql = `Select first_name as MANAGER from employee`;
-                connection.query(sqlQuery, (err, res) => {
+                connection.query(sql, (err, res) => {
                     if (err) throw err;
                     for (let i = 0; i < res.length; i++) {
                         mgr.push(res[i].MANAGER);
@@ -210,7 +210,7 @@ const addEmp = () => {
                             if (err) throw err;
                             emp.push(res[0].mgrID)
                             console.log(emp)
-                            let e = new Employee(1, emp[0], emp[1], emp[2]. emp[3]);
+                            let e = new Employee(1, emp[0], emp[1], emp[2], emp[3]);
                             console.log(e)
                             e.addEmployee(connection, e.getFirstName(), e.getLastName(), e.getRid(), e.getMgrId());
                             console.log('New employee successfully added!');
@@ -272,7 +272,7 @@ const addRole = () => {
                 let sqlQuery = `Select id from department where name="` + response.depts + `"`;
                 connection.query(sqlQuery, (err, res) => {
                     if (err) throw err;
-                    role.push(res[0].id)
+                    role.push(res.id)
                     let r = new Role(1, role[0], role[1], role[2],);
                     r.addRole(connection, r.getTitle(), r.getSalary(), r.getDid())
                     console.log('New position has been successfully added');
