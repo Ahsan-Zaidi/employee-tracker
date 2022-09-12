@@ -1,5 +1,4 @@
-//required items
-const cTable = require('console.table');
+//required item
 
 //creating Role class with all related functions
 class Role {
@@ -65,4 +64,4 @@ class Role {
 }
 
 //export the Role file
-module.exports = Role;
+export default Role;

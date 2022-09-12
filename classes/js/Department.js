@@ -1,5 +1,4 @@
 //required items
-const cTable = require('console.table');
 
 //create Department class with all functions
 class Department {
@@ -15,7 +14,7 @@ class Department {
     //return Department
     ViewDepartment(connection)
     {
-        let sqlQuery = `selest id AS ID, name as Department from department`;
+        let sqlQuery = `select id AS ID, name as Department from department`;
         connection.query(sqlQuery, (err, res) => {
             if (err) {throw err}
             console.table(res);
@@ -39,4 +38,4 @@ class Department {
     }
 }
 //export Department file
-module.exports = Department;
+export default Department;

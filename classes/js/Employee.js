@@ -1,6 +1,5 @@
 //required items
-const cTable = require('console.table');
-const connection = require('../../config/connection');
+import connection from '../../config/connection.js';
 
 //create Employee class with all of its functions
 class Employee {
@@ -102,4 +101,4 @@ class Employee {
 }
 
 //export Employee file
-module.exports = Employee;
+export default Employee;

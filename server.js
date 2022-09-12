@@ -1,11 +1,10 @@
 //required files/dependencies
-const connection = require("./config/connection");
-const cTable = require('console-table');
-const inquirer = require('inquirer');
+import connection from './config/connection.js';
+import inquirer from 'inquirer';
 
-const Employee = require('./classes/js/Employee');
-const Department = require('./classes/js/Department');
-const Role = require('./classes/js/Role');
+import Employee from './classes/js/Employee.js'
+import Department from './classes/js/Department.js'
+import Role from './classes/js/Role.js'
     // const { appendFile } = require("fs");
     // const { default: prompt } = require("inquirer/lib/ui/prompt");
     // const { allowedNodeEnvironmentFlags } = require("process");
