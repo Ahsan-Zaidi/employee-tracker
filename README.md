@@ -30,9 +30,9 @@
 
 🔍 A node.js application that uses user input from inquirer to populate an employee tracker database displaying members of a company.
 
-* [GitHub Repository]
+* [GitHub Repository] (https://github.com/Ahsan-Zaidi/employee-tracker)
 
-![Employee Tracker]
+![Employee Tracker] (./assets/images/Screenshot.jpg)
   
 💻 Below is the gif showing the functionality of the application:
   
