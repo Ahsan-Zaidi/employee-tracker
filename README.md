@@ -36,7 +36,7 @@
   
 💻 Below is the gif showing the functionality of the application:
   
-![Employee Tracker]()
+![Employee Tracker](./assets/demo/Demos.gif)
   
 ## User Requirements
   

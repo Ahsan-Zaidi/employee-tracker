@@ -88,13 +88,14 @@ class Employee {
     //Delete employee from the database
     DeleteEmp(connection, employeeID) {
         connection.query(`DELETE FROM employee WHERE id = ${employeeID}`, (err, res) => {
-            console.table(response);
+            console.log("Employee Deleted Sucessfully");
         });
     }
     //update an Employees manager
-    updateMgr(connection, newMgr, oldMgr)
+    updateMgr(connection, newMgr, empID)
     {
-        connection.query(`UPDATE employee SET manager_id = ${newMgr}`, (err, res) => {
+        console.log("empID"+empID)
+        connection.query(`UPDATE employee SET manager_id = ${newMgr} WHERE id= "${empID}"`, (err, res) => {
             if (err) throw err;
         })
     }

@@ -131,7 +131,7 @@ const deleteDept = () => {
             for (let i = 0; i < depts.length; i++) {
                 if (response.Departments == depts[i]) {
                     let dept = new Department(response.Departments);
-                    dept. DeleteDepartment(connection, dept.getDeptName())
+                    dept.DeleteDepartment(connection, dept.getDeptName())
                     break;
                 }
             }
@@ -272,8 +272,8 @@ const addRole = () => {
                 let sqlQuery = `Select id from department where name="` + response.depts + `"`;
                 connection.query(sqlQuery, (err, res) => {
                     if (err) throw err;
-                    role.push(res.id)
-                    let r = new Role(1, role[0], role[1], role[2],);
+                    role.push(res[0].id)
+                    let r = new Role(1, role[0], role[1], role[2]);
                     r.addRole(connection, r.getTitle(), r.getSalary(), r.getDid())
                     console.log('New position has been successfully added');
                     promptUser();
